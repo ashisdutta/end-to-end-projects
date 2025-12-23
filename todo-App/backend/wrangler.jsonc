@@ -6,12 +6,7 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "vars": {
-    //"MY_VAR": "my-variable",
-    "DATABASE_URL":"prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19DMi1uUnU0YzdDbTBNVXVhU2IxRk4iLCJhcGlfa2V5IjoiMDFLQ1hHNVIwVzgwU0g1NE43VFQwNTQ4RDEiLCJ0ZW5hbnRfaWQiOiI2NDMxZmJhZWRmYmJmMjQxNTI3MTA2ZGE3NjQ3ZTcxNWY4ZjBlMjU2MDY2MDU1ZjgzMmNlYWJkNTI0YjBmZmM4IiwiaW50ZXJuYWxfc2VjcmV0IjoiZGY2ZmYxZTMtYmIyNy00NDk3LTljMTQtYmJiMDg5YTBmNjNlIn0.Sxjv13cvJ8eKtY-XBUp154eLeqGitDVWc-Sz0gplP_Q",
-    "JWT_SECRET": "mysecret",
-    //"DATABASE_URL":"postgresql://neondb_owner:npg_twK7nE2ijlIm@ep-dawn-pine-adqhr239-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-    },
+
   // "kv_namespaces": [
   //   {
   //     "binding": "MY_KV_NAMESPACE",
