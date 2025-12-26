@@ -10,8 +10,7 @@ export const signinInput = z.object({
 });
 export const createTodoInput = z.object({
     title: z.string(),
-    description: z.string(),
-    authorId: z.string()
+    description: z.string()
 });
 export const updateTodoInput = z.object({
     title: z.string(),

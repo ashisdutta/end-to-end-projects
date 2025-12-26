@@ -15,8 +15,7 @@ export type SigninInput = z.infer<typeof signinInput>
 
 export const createTodoInput = z.object({
     title: z.string(),
-    description: z.string(),
-    authorId: z.string()
+    description: z.string()
 })
 export type CreateTodoInput = z.infer<typeof createTodoInput>
 

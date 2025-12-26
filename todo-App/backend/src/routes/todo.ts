@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { decode, sign, verify } from 'hono/jwt'
 import { PrismaClient } from '../../generated/prisma/client'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { createTodoInput, signupInput, updateTodoInput } from '@ashisdta/todoapp-common'
+import { createTodoInput,updateTodoInput } from '@ashisdta/todoapp-common'
 
 export const todoRouter = new Hono<{
     Bindings:{
@@ -42,12 +42,13 @@ todoRouter.post('/', async(c)=>{
     }).$extends(withAccelerate())
 
     const body = await c.req.json();
+    const userId = c.get("userId");
     const { success } = createTodoInput.safeParse(body);
     if(!success){
         c.status(411)
         return c.json({message:"incorrect input"})
     }
-    const userId = c.get("userId");
+    
     try{
         const todo = await prisma.todo.create({
         data:{
@@ -65,42 +66,43 @@ todoRouter.post('/', async(c)=>{
     }
 })
 
-// update Todo
-todoRouter.put('/', async(c)=>{
+// update done props
+todoRouter.put('/', async (c) => {
     const prisma = new PrismaClient({
         accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
-    const body = await c.req.json();
-    const { success } = updateTodoInput.safeParse(body);
-    if(!success){
-        c.status(411)
-        return c.json({message:"incorrect input"})
-    }
-    const todo = await prisma.todo.update({
-        where:{
-            id:body.id
-        },
-        data: {
-            title: body.title,
-            description: body.description
-        }
-    })
 
-    return c.json({
-        id: todo.id
-    })
-})
+    const body = await c.req.json(); // contains { id, done }
+    const userId = c.get("userId");
+
+    try {
+        await prisma.todo.update({
+            where: {
+                id: body.id,
+                authorId: userId // Security: Ensure this todo belongs to the logged-in user
+            },
+            data: {
+                done: body.done
+            }
+        });
+        return c.json({ message: "Update successful" });
+    } catch (e) {
+        c.status(500);
+        return c.json({ message: "Failed to update todo" });
+    }
+});
 
 // get todos 
 todoRouter.get("/todos", async(c)=>{
     const prisma = new PrismaClient({
         accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
-    const body = await c.req.json();
+    const userId = c.get("userId");
+    //const body = await c.req.json();
 
     const todos = await prisma.todo.findMany({
         where:{
-            id: body.id
+            authorId: userId
         }
     })
     return c.json(todos)
@@ -130,4 +132,31 @@ todoRouter.get("/:id", async(c)=>{
             message: "error while fetching todo post"
         })
     }
+})
+
+// update Todo
+todoRouter.put('/update', async(c)=>{
+    const prisma = new PrismaClient({
+        accelerateUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+    const body = await c.req.json();
+    const { success } = updateTodoInput.safeParse(body);
+    if(!success){
+        c.status(411)
+        return c.json({message:"incorrect input"})
+    }
+    const todo = await prisma.todo.update({
+        where:{
+            id:body.id
+        },
+        data: {
+            title: body.title,
+            description: body.description,
+            done: body.done
+        }
+    })
+
+    return c.json({
+        id: todo.id
+    })
 })

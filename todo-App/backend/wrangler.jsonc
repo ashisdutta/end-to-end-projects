@@ -1,11 +1,15 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "backend",
+  "name": "todo-app-server",
   "main": "src/index.ts",
   "compatibility_date": "2025-12-16",
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "vars":{
+    "DATABASE_URL":"prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19pTG05Z1hBVEtiaHhrNk1EMXpFZGwiLCJhcGlfa2V5IjoiMDFLRDdGV1BHWTA0VllGN01WVkJDQ1lCOFoiLCJ0ZW5hbnRfaWQiOiI2NDMxZmJhZWRmYmJmMjQxNTI3MTA2ZGE3NjQ3ZTcxNWY4ZjBlMjU2MDY2MDU1ZjgzMmNlYWJkNTI0YjBmZmM4IiwiaW50ZXJuYWxfc2VjcmV0IjoiZGY2ZmYxZTMtYmIyNy00NDk3LTljMTQtYmJiMDg5YTBmNjNlIn0.ZFdiO4yVIgbAeNpRtpNqiiEx2QC9xQ9AJkKyPOdpLjI",
+    "JWT_SECRET":"mysecret"
+  }
 
   // "kv_namespaces": [
   //   {

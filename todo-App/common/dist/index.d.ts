@@ -13,7 +13,6 @@ export type SigninInput = z.infer<typeof signinInput>;
 export declare const createTodoInput: z.ZodObject<{
     title: z.ZodString;
     description: z.ZodString;
-    authorId: z.ZodString;
 }, z.z.core.$strip>;
 export type CreateTodoInput = z.infer<typeof createTodoInput>;
 export declare const updateTodoInput: z.ZodObject<{
